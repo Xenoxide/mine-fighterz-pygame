@@ -7,7 +7,7 @@ pygame.mixer.init()
 
 def loadAssets(): 
     backdropNames = [
-        'arcade.png',
+        'arcade.png', #0
         'death1.png',
         'grey1.png',
         'grey4.png',
@@ -24,11 +24,11 @@ def loadAssets():
         'grey3.png',
         'loading2.png',
         'piratecat.png',
-        'volcano.png'
+        'volcano.png' #17
     ]
 
     sprites_misc = [
-        'arcade.png',
+        'arcade.png', #0
         'arcadebowl.png',
         'arcaderock.png',
         'blank.png',
@@ -36,19 +36,19 @@ def loadAssets():
         'chestopen.png',
         'godown.png',
         'painting.png',
-        'playbutton.png'
+        'playbutton.png' #8
     ]
     sprites_othercharacters = [
-        'apple.png',
+        'apple.png', #9
         'badapple.png',
         'boss1.png',
         'boss2.png',
         'chezletter1.png',
         'chezletter2.png',
-        'piratecat.png'
+        'piratecat.png' #15
     ]
     sprites_player = [
-        'eatleft1.png',
+        'eatleft1.png', #16
         'eatleft2.png',
         'eatright1.png',
         'eatright2.png',
@@ -63,36 +63,36 @@ def loadAssets():
         'surprised.png',
         'walkietalkie.png',
         'yeahleft.png',
-        'yeahright.png'
+        'yeahright.png' #31
     ]
     sprites_ray = [
-        'neutral.png',
+        'neutral.png', #32
         'sad.png',
         'smile.png',
         'surprised.png',
-        'sword.png'
+        'sword.png' #36
     ]
     sprites_text = [
-        'hunger.png',
+        'hunger.png', #37
         'jeffporg.png',
         'minefighterz.png',
         'minefighterzred.png',
         'quickattack.png',
-        'spicygum.png'
+        'spicygum.png' #42
     ]
     sprites_toddler = [
-        'angry.png',
+        'angry.png', #43
         'left.png',
         'right.png'
     ]
     sound_names = [
-        'music/backbeat.wav',
+        'music/backbeat.wav', #0
         'music/epicmusic.wav',
         'music/ifeelsoalive.wav',
         'music/introtheme.wav',
         'music/overworldtheme.wav',
-        'music/sadpiano.wav',
-        'sfx/belltoll.wav',
+        'music/sadpiano.wav', #5
+        'sfx/belltoll.wav', #6
         'sfx/bigpop.wav',
         'sfx/boing.wav',
         'sfx/cricket.wav',
@@ -109,7 +109,7 @@ def loadAssets():
         'sfx/scream.wav',
         'sfx/snap.wav',
         'sfx/ufo.wav',
-        'sfx/woop.wav'
+        'sfx/woop.wav' #23
     ]
 
     backdrops = []
@@ -134,3 +134,4 @@ def loadAssets():
     #for sound in sound_names:
     #    sounds.append(pygame.mixer.music.load('assets/sound/' + sound))
     return (backdrops, sprites)
+
