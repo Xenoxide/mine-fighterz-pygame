@@ -29,7 +29,6 @@ def renderText(inputText, pos, size, fontColor):
     renderedFont = arial.render(inputText, True, fontColor)
     screen.blit(renderedFont, pos)
 
-
 def createVarDisplay(val, val2, pos, lens):
     x, y = pos
     len1, len2 = lens
@@ -38,10 +37,17 @@ def createVarDisplay(val, val2, pos, lens):
     renderText(val + ": ", (x + 2.5, y - 2.5), 20, (0, 0, 0))
     renderText(val2, (x + len1 - len2, y - 2.5), 20, (255, 255, 255))
 
+def rS(spriteNum, pos, scale=1, rotation=0): #render sprite with rotation and scale (optional)
+    theSprite = sprites[spriteNum]
+    width = theSprite.get_width()
+    height = theSprite.get_height()
+    toRender = pygame.transform.scale(theSprite, (width * scale, height * scale))
+    toRender = pygame.transform.rotate(toRender, rotation)
+    screen.blit(toRender, pos)
+    #note: scaling too much returns error "pygame.error: Out of memory"
 
 
 #scenes
-
 if random.randint(0, 1):
     scene0_num = 9
 else:
@@ -55,7 +61,8 @@ def scene_init():
     pygame.time.wait(2000)
 
 def scene1():
-    #styff
+    setBackdrop(11)
+    
 
 
 
@@ -63,10 +70,11 @@ def scene1():
 running = True
 while running:
 
-    clock.tick(30)
-    createVarDisplay("Name", playerName, (15, 10), (170, 100))
-    createVarDisplay("Day", weekday, (800, 10), (140, 90))
-    scene_init()
+    rS(2, (200, 200))
+    #clock.tick(30)
+    #createVarDisplay("Name", playerName, (15, 10), (170, 100))
+    #createVarDisplay("Day", weekday, (800, 10), (140, 90))
+    #scene_init()
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
