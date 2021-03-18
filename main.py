@@ -55,9 +55,8 @@ def waitToPass(): #wait for the user to press space
     while not _pass:
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
-                if event.type == pygame.K_SPACE:
-                    _pass = True
-                    pass
+                _pass = True
+                pass
             elif event.type == pygame.QUIT:
                 running = False
                 quit()
