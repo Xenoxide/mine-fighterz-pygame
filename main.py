@@ -47,10 +47,15 @@ if random.randint(0, 1):
 else:
     scene0_num = 15
 
-def scene0():
+def scene_init():
     setBackdrop(scene0_num)
+    createVarDisplay("Name", playerName, (15, 10), (170, 100))
+    createVarDisplay("Day", weekday, (800, 10), (140, 90))
     pygame.display.update()
     pygame.time.wait(2000)
+
+def scene1():
+    #styff
 
 
 
@@ -61,6 +66,7 @@ while running:
     clock.tick(30)
     createVarDisplay("Name", playerName, (15, 10), (170, 100))
     createVarDisplay("Day", weekday, (800, 10), (140, 90))
+    scene_init()
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
