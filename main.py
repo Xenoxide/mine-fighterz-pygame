@@ -45,7 +45,11 @@ def rS(spriteNum, pos, scale=1, rotation=0): #render sprite with rotation and sc
     theSprite = sprites[spriteNum]
     width = theSprite.get_width()
     height = theSprite.get_height()
-    toRender = pygame.transform.scale(theSprite, (int(float(width) * scale), int(float(height) * scale)))
+    toRender = pygame.transform.scale(
+        theSprite, 
+        (int(float(width) * scale), 
+        int(float(height) * scale))
+    )
     toRender = pygame.transform.rotate(toRender, rotation)
     screen.blit(toRender, pos)
     #note: scaling too much returns error "pygame.error: Out of memory"
