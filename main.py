@@ -45,19 +45,41 @@ def rS(spriteNum, pos, scale=1, rotation=0): #render sprite with rotation and sc
     theSprite = sprites[spriteNum]
     width = theSprite.get_width()
     height = theSprite.get_height()
-    toRender = pygame.transform.scale(theSprite, (width * scale, height * scale))
+    toRender = pygame.transform.scale(theSprite, (int(float(width) * scale), int(float(height) * scale)))
     toRender = pygame.transform.rotate(toRender, rotation)
     screen.blit(toRender, pos)
     #note: scaling too much returns error "pygame.error: Out of memory"
+
+def xCheck(bool1, bool2):
+    if not bool1 and not bool2:
+        return 0
+    if bool1 and not bool2:
+        return 1
+    if bool2 and not bool1:
+        return 10
+    if bool1 and bool2:
+        return 11
+
 
 def waitToPass(): #wait for the user to press space
     _pass = False
     while not _pass:
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
-                _pass = True
-                pass
-            elif event.type == pygame.QUIT:
+                if event.key == pygame.K_SPACE:
+                    _pass = True
+                    pass
+
+                arrowCheck = xCheck(event.key == pygame.K_LEFT, event.key == pygame.K_RIGHT)
+                if arrowCheck == 0:
+                    print('nokey')
+                if arrowCheck == 1:
+                    print('left')
+                if arrowCheck == 10:
+                    print('right')
+                if arrowCheck == 11:
+                    print('both_notpossible')
+            if event.type == pygame.QUIT:
                 running = False
                 quit()
 
@@ -76,7 +98,7 @@ while running:
     waitToPass()
 
     setBackdrop(11)
-    rS(8, (200, 200))
+    rS(8, (200, 200), 0.5)
     pygame.display.update()
     pygame.time.wait(2000)
     waitToPass()
