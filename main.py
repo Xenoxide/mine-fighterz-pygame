@@ -17,6 +17,10 @@ week_days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday",
 weekday = week_days[datetime.date(2020,7,24).weekday()]
 playerName = "No Name"
 
+#set icon/caption
+pygame.display.set_caption("Mine Fighterz!")
+pygame.display.set_icon(sprites[13])
+
 #quality of life functions
 def drawRect(x, y, width, height, color, br=0):
     pygame.draw.rect(screen, color, pygame.Rect(x, y, width, height), border_radius=br)
@@ -52,11 +56,6 @@ def waitToPass(): #wait for the user to press space
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
                 if event.type == pygame.K_SPACE:
-                    _pass = True
-                elif event.type == pygame.K_ESCAPE:
-                    running = False
-                    quit()
-                else:
                     _pass = True
                     pass
             elif event.type == pygame.QUIT:
