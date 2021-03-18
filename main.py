@@ -46,6 +46,22 @@ def rS(spriteNum, pos, scale=1, rotation=0): #render sprite with rotation and sc
     screen.blit(toRender, pos)
     #note: scaling too much returns error "pygame.error: Out of memory"
 
+def waitToPass(): #wait for the user to press space
+    _pass = False
+    while not _pass:
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.type == pygame.K_SPACE:
+                    _pass = True
+                elif event.type == pygame.K_ESCAPE:
+                    running = False
+                    quit()
+                else:
+                    _pass = True
+                    pass
+            elif event.type == pygame.QUIT:
+                running = False
+                quit()
 
 #scenes
 if random.randint(0, 1):
@@ -53,33 +69,16 @@ if random.randint(0, 1):
 else:
     scene0_num = 15
 
-def scene_init():
+running = True
+while running:
     setBackdrop(scene0_num)
     createVarDisplay("Name", playerName, (15, 10), (170, 100))
     createVarDisplay("Day", weekday, (800, 10), (140, 90))
     pygame.display.update()
-    pygame.time.wait(2000)
+    waitToPass()
 
-def scene1():
     setBackdrop(11)
-    
-
-
-
-#game loop
-running = True
-while running:
-
-    rS(2, (200, 200))
-    #clock.tick(30)
-    #createVarDisplay("Name", playerName, (15, 10), (170, 100))
-    #createVarDisplay("Day", weekday, (800, 10), (140, 90))
-    #scene_init()
-
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_ESCAPE:
-                running = False
+    rS(8, (200, 200))
     pygame.display.update()
+    pygame.time.wait(2000)
+    waitToPass()
