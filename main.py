@@ -102,7 +102,7 @@ while running:
     waitToPass()
 
     setBackdrop(11)
-    rS(8, (200, 200), 0.5)
+    rS(8, (400, 600), 0.3)
     pygame.display.update()
     pygame.time.wait(2000)
     waitToPass()
