@@ -8,3 +8,5 @@ The context of this game is that in science class we had to make a scratch proje
 Anyway, I think that recreating the project in pygame will help me learn it. The reason I want to learn pygame is to escape the text environment all my programs are stuck in. I want real graphics.
 
 However this is probably one of the things I try that I give up on after 2 weeks, because I got bored. Happens all the time.
+
+My scratch is https://scratch.mit.edu/users/Staining but you won't find anything interesting; it's all cringe.
