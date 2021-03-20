@@ -75,14 +75,10 @@ def waitToPass(): #wait for the user to press space
                     pass
 
                 arrowCheck = xCheck(event.key == pygame.K_LEFT, event.key == pygame.K_RIGHT)
-                if arrowCheck == 0:
-                    print('nokey')
                 if arrowCheck == 1:
-                    print('left')
+                    print('')
                 if arrowCheck == 10:
-                    print('right')
-                if arrowCheck == 11:
-                    print('both_notpossible')
+                    print('')
             if event.type == pygame.QUIT:
                 running = False
                 quit()
@@ -102,7 +98,7 @@ while running:
     waitToPass()
 
     setBackdrop(11)
-    rS(8, (960, 720), 0.3)
+    rS(8, (400, 500), 0.3)
     pygame.display.update()
     pygame.time.wait(2000)
     waitToPass()
