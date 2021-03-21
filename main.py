@@ -3,6 +3,7 @@
 import pygame # .pylintrc file is to load the C extensions
 import datetime
 import loadassets
+import dialogue
 import random
 
 pygame.init() #initalize pygame
@@ -32,6 +33,11 @@ def renderText(inputText, pos, size, fontColor):
     arial = pygame.font.Font('assets/misc/notpiratedfont.ttf', size)
     renderedFont = arial.render(inputText, True, fontColor)
     screen.blit(renderedFont, pos)
+
+def gPrint(inputText, width, pos):
+    x, y = pos
+    drawRect(x, y, width + 5, 30, (255, 255, 255))
+    renderText(inputText, (x + 2.5, y), 25, (0, 0, 0))
 
 def createVarDisplay(val, val2, pos, lens):
     x, y = pos
@@ -90,15 +96,17 @@ else:
     scene0_num = 15
 
 running = True
-while running:
-    setBackdrop(scene0_num)
-    createVarDisplay("Name", playerName, (15, 10), (170, 100))
-    createVarDisplay("Day", weekday, (800, 10), (140, 90))
-    pygame.display.update()
-    waitToPass()
+setBackdrop(scene0_num)
+createVarDisplay("Name", playerName, (15, 10), (170, 100))
+createVarDisplay("Day", weekday, (800, 10), (140, 90))
+pygame.display.update()
+waitToPass()
 
-    setBackdrop(11)
-    rS(8, (400, 500), 0.3)
-    pygame.display.update()
-    pygame.time.wait(2000)
+setBackdrop(11)
+rS(8, (390, 465), 0.4)
+pygame.display.update()
+pygame.time.wait(2000)
+waitToPass()
+for i in range(7):
+    print(dialogue.scene1[i])
     waitToPass()
