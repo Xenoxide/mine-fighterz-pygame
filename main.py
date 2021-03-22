@@ -29,15 +29,18 @@ def drawRect(x, y, width, height, color, br=0):
 def setBackdrop(backdropNum):
     screen.blit(backdrops[backdropNum], (0, 0))
 
-def renderText(inputText, pos, size, fontColor):
+def renderText(inputText, pos, size, fontColor, render=True):
     arial = pygame.font.Font('assets/misc/notpiratedfont.ttf', size)
     renderedFont = arial.render(inputText, True, fontColor)
-    screen.blit(renderedFont, pos)
+    if render: screen.blit(renderedFont, pos)
+    return renderedFont.get_rect() #for gPrint
 
 def gPrint(inputText, width, pos):
     x, y = pos
-    drawRect(x, y, width + 5, 30, (255, 255, 255))
-    renderText(inputText, (x + 2.5, y), 25, (0, 0, 0))
+    theRect = renderText(inputText, pos, 25, (0, 0, 0), False)
+    theRect = theRect.move(x, y)
+    pygame.draw.rect(screen, (255, 255, 255), theRect)
+    renderText(inputText, (x + 2.5, y - 2.5), 25, (0, 0, 0))
 
 def createVarDisplay(val, val2, pos, lens):
     x, y = pos
