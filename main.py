@@ -26,8 +26,10 @@ pygame.display.set_icon(sprites[13])
 def drawRect(x, y, width, height, color, br=0):
     pygame.draw.rect(screen, color, pygame.Rect(x, y, width, height), border_radius=br)
 
-def setBackdrop(backdropNum):
+backdrop = 0
+def setBackdrop(backdropNum = backdrop): #no param reloads the backdrop
     screen.blit(backdrops[backdropNum], (0, 0))
+    backdrop = backdropNum
 
 def renderText(inputText, pos, size, fontColor, render=True):
     arial = pygame.font.Font('assets/misc/notpiratedfont.ttf', size)
@@ -64,16 +66,6 @@ def rS(spriteNum, pos, scale=1, rotation=0): #render sprite with rotation and sc
     screen.blit(toRender, (x, y))
     #note: scaling too much returns error "pygame.error: Out of memory"
 
-def xCheck(bool1, bool2): #exclusive check (1 and 10 never happen for both)
-    if not bool1 and not bool2:
-        return 0
-    if bool1 and not bool2:
-        return 1
-    if bool2 and not bool1:
-        return 10
-    if bool1 and bool2:
-        return 11
-
 def waitToPass(): #wait for the user to press space
     _pass = False
     while not _pass:
@@ -82,15 +74,42 @@ def waitToPass(): #wait for the user to press space
                 if event.key == pygame.K_SPACE:
                     _pass = True
                     pass
-
-                arrowCheck = xCheck(event.key == pygame.K_LEFT, event.key == pygame.K_RIGHT)
-                if arrowCheck == 1:
-                    print('')
-                if arrowCheck == 10:
-                    print('')
             if event.type == pygame.QUIT:
                 running = False
                 quit()
+
+def createTextbox(displayText, sceneNum=1, inputBox=False):
+    if inputBox:
+        scene(sceneNum)
+        text = ''
+        done = False
+        while not done:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    running = False
+                    quit()
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_RETURN:
+                        done = True
+                        return text
+                        text = ''
+                    elif event.key == pygame.K_BACKSPACE:
+                        text = text[:-1]
+                    else:
+                        text += event.unicode
+                drawRect(152, 400, 656, 50, (0, 255, 0), 5)
+                drawRect(154.5, 402.5, 651, 45, (255, 255, 255), 5)
+                renderText(displayText, (154.5, 402.5), 25, (0, 0, 0))
+                drawRect(152, 463, 656, 50, (0, 255, 255), 5)
+                drawRect(154.5, 465.5, 651, 45, (255, 255, 255), 5)
+                renderText(text, (154.5, 465.5), 25, (0, 0, 0))
+                pygame.display.update()
+
+
+    if not inputBox:
+        drawRect(152, 463, 656, 50, (0, 255, 255), 5)
+        drawRect(154.5, 465.5, 651, 45, (255, 255, 255), 5)
+        renderText(displayText, (154.5, 465.5), 25, (0, 0, 0))
 
 #scenes
 if random.randint(0, 1):
@@ -98,21 +117,26 @@ if random.randint(0, 1):
 else:
     scene0_num = 15
 
+def scene(num):
+    if num == 1:
+        setBackdrop(11)
+        createVarDisplay("Name", playerName, (15, 10), (170, 100))
+        createVarDisplay("Day", weekday, (800, 10), (140, 90))
+        rS(8, (390, 465), 0.4)
+
 running = True
 setBackdrop(scene0_num)
-createVarDisplay("Name", playerName, (15, 10), (170, 100))
-createVarDisplay("Day", weekday, (800, 10), (140, 90))
 pygame.display.update()
 waitToPass()
 
-setBackdrop(11)
-rS(8, (390, 465), 0.4)
-pygame.display.update()
-pygame.time.wait(2000)
+scene(1)
 waitToPass()
 for i in range(7):
-    setBackdrop(11)
-    rS(8, (390, 465), 0.4)
-    gPrint(dialogue.scene1[i], 50, (400, 400))
+    scene(1)
+    createTextbox(dialogue.scene1[i], 1, False)
     pygame.display.update()
     waitToPass()
+print("debug")
+
+userIn = createTextbox("Who are you anyways?", 1, True)
+pygame.display.update()
