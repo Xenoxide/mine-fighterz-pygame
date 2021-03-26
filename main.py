@@ -26,16 +26,15 @@ pygame.display.set_icon(sprites[13])
 def drawRect(x, y, width, height, color, br=0):
     pygame.draw.rect(screen, color, pygame.Rect(x, y, width, height), border_radius=br)
 
-backdrop = 0
-def setBackdrop(backdropNum = backdrop): #no param reloads the backdrop
-    screen.blit(backdrops[backdropNum], (0, 0))
-    backdrop = backdropNum
 
-def renderText(inputText, pos, size, fontColor, render=True):
+def setBackdrop(backdropNum):
+    screen.blit(backdrops[backdropNum], (0, 0))
+    pygame.display.update()
+
+def renderText(inputText, pos, size, fontColor):
     arial = pygame.font.Font('assets/misc/notpiratedfont.ttf', size)
     renderedFont = arial.render(inputText, True, fontColor)
-    if render: screen.blit(renderedFont, pos)
-    return renderedFont.get_rect() #for gPrint
+    screen.blit(renderedFont, pos)
 
 def createVarDisplay(val, val2, pos, lens):
     x, y = pos
@@ -97,8 +96,7 @@ def createTextbox(displayText, sceneNum=1, inputBox=False):
                 drawRect(154.5, 465.5, 651, 45, (255, 255, 255), 5)
                 renderText(text, (154.5, 465.5), 25, (0, 0, 0))
                 pygame.display.update()
-
-
+      
     if not inputBox:
         drawRect(152, 463, 656, 50, (0, 255, 255), 5)
         drawRect(154.5, 465.5, 651, 45, (255, 255, 255), 5)
@@ -129,7 +127,5 @@ for i in range(7):
     createTextbox(dialogue.scene1[i], 1, False)
     pygame.display.update()
     waitToPass()
-print("debug")
 
-userIn = createTextbox("Who are you anyways?", 1, True)
-pygame.display.update()
+playerName = createTextbox("Who are you anyways?", 1, True)
