@@ -37,13 +37,6 @@ def renderText(inputText, pos, size, fontColor, render=True):
     if render: screen.blit(renderedFont, pos)
     return renderedFont.get_rect() #for gPrint
 
-def gPrint(inputText, width, pos):
-    x, y = pos
-    theRect = renderText(inputText, pos, 25, (0, 0, 0), False)
-    theRect = theRect.move(x, y)
-    pygame.draw.rect(screen, (255, 255, 255), theRect)
-    renderText(inputText, (x + 2.5, y - 2.5), 25, (0, 0, 0))
-
 def createVarDisplay(val, val2, pos, lens):
     x, y = pos
     len1, len2 = lens
