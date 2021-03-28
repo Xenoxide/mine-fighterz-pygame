@@ -1,21 +1,21 @@
 ### main issue: audio files will not load ###
 
-import pygame # .pylintrc file is to load the C extensions
+# .pylintrc file is to load the C extensions for vscode
+# you can remove if you aren't using vscode
+import pygame 
 import datetime
 import loadassets
-import dialogue
+import dialogue as d
 import random
 
 pygame.init() #initalize pygame
 clock = pygame.time.Clock() #for limiting the fps
 backdrops, sprites = loadassets.loadAssets() #load assets
 
+screen = pygame.display.set_mode((960, 720)) 
 
-# I don't know why I have to multiply by two, otherwise it won't fit
-screen = pygame.display.set_mode((480 * 2, 360 * 2)) 
-
-week_days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
-weekday = week_days[datetime.date(2020,7,24).weekday()]
+week_days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+weekday = week_days[int(datetime.datetime.now().strftime("%w"))]
 playerName = "No Name"
 
 #set icon/caption
@@ -29,7 +29,6 @@ def drawRect(x, y, width, height, color, br=0):
 
 def setBackdrop(backdropNum):
     screen.blit(backdrops[backdropNum], (0, 0))
-    pygame.display.update()
 
 def renderText(inputText, pos, size, fontColor):
     arial = pygame.font.Font('assets/misc/notpiratedfont.ttf', size)
@@ -56,6 +55,7 @@ def rS(spriteNum, pos, scale=1, rotation=0): #render sprite with rotation and sc
     )
     toRender = pygame.transform.rotate(toRender, rotation)
     screen.blit(toRender, (x, y))
+    return (toRender.get_rect()).move(x, y)
     #note: scaling too much returns error "pygame.error: Out of memory"
 
 def waitToPass(): #wait for the user to press space
@@ -77,7 +77,7 @@ def createTextbox(displayText, sceneNum=1, inputBox=False):
         done = False
         while not done:
             for event in pygame.event.get():
-                if event.type == pygame.QUIT:
+                if event.type == pygame.QUIT: #always need a quit option
                     running = False
                     quit()
                 if event.type == pygame.KEYDOWN:
@@ -88,7 +88,7 @@ def createTextbox(displayText, sceneNum=1, inputBox=False):
                     elif event.key == pygame.K_BACKSPACE:
                         text = text[:-1]
                     else:
-                        text += event.unicode
+                        text += event.unicode #the part that actually adds text
                 drawRect(152, 400, 656, 50, (0, 255, 0), 5)
                 drawRect(154.5, 402.5, 651, 45, (255, 255, 255), 5)
                 renderText(displayText, (154.5, 402.5), 25, (0, 0, 0))
@@ -102,18 +102,22 @@ def createTextbox(displayText, sceneNum=1, inputBox=False):
         drawRect(154.5, 465.5, 651, 45, (255, 255, 255), 5)
         renderText(displayText, (154.5, 465.5), 25, (0, 0, 0))
 
+def cursorIntersect(rect):
+    x, y = pygame.mouse.get_pos()
+    return (rect.x > x) and (rect.y > y) and (rect.x + width < x) and (rect.x + height < y)
+
 #scenes
 if random.randint(0, 1):
     scene0_num = 9
 else:
     scene0_num = 15
 
-def scene(num):
+def scene(num, e_params=0):
     if num == 1:
         setBackdrop(11)
         createVarDisplay("Name", playerName, (15, 10), (170, 100))
         createVarDisplay("Day", weekday, (800, 10), (140, 90))
-        rS(8, (390, 465), 0.4)
+        rS(8, (390, 465), 0.3 * e_params + 0.35 * (not  e_params))
 
 running = True
 setBackdrop(scene0_num)
@@ -124,8 +128,23 @@ scene(1)
 waitToPass()
 for i in range(7):
     scene(1)
-    createTextbox(dialogue.scene1[i], 1, False)
+    createTextbox(d.scene1[i], 1, False)
     pygame.display.update()
     waitToPass()
 
-playerName = createTextbox("Who are you anyways?", 1, True)
+playerName = createTextbox(d.scene1[7], 1, True)
+createTextbox(d.scene1[8] + playerName + d.scene1[9], 1, False)
+pygame.display.update()
+waitToPass()
+createTextbox(playerName + d.scene1[10], 1, False)
+pygame.display.update()
+waitToPass()
+createTextbox(d.scene1[11], 1, False)
+pygame.display.update()
+waitToPass()
+createTextbox(d.scene1[12], 1, False)
+pygame.display.update()
+waitToPass()
+while True:
+    print(cursorIntersect(rS(8, (390, 465), 0.3)))
+    waitToPass()
