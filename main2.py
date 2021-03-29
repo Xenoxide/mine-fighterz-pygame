@@ -1,12 +1,10 @@
-### main issue: audio files will not load ###
-
-# .pylintrc file is to load the C extensions for vscode
-# you can remove if you aren't using vscode
+#THIS IS THE EXPIRIMENTAL SCRIPT
 import pygame 
 import datetime
 import loadassets
 import dialogue as d
 import random
+import threading
 
 print("start")
 pygame.init() #initalize pygame
@@ -59,22 +57,21 @@ def rS(spriteNum, pos, scale=1, rotation=0): #render sprite with rotation and sc
     return (toRender.get_rect()).move(x, y)
     #note: scaling too much returns error "pygame.error: Out of memory"
 
-def waitToPass(): #wait for the user to press space
-    _pass = False
-    while not _pass:
-        for event in pygame.event.get():
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE:
-                    _pass = True
-                    pass
-            if event.type == pygame.QUIT:
-                running = False
-                print("exit")
-                quit()
-            if event == pygame.MOUSEBUTTONDOWN:
-                return rect.collidepoint(event.pos)
+mouseClicked = False
+def isQuit(rect=None): #background quit function
+    for event in pygame.event.get():
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
                 _pass = True
                 pass
+        if event.type == pygame.QUIT:
+            running = False
+            print("exit")
+            quitThread.join()
+            quit()
+        if event == pygame.MOUSEBUTTONDOWN and not rect == None:
+            mouseClicked = rect.collidepoint(event.pos)
+
 
 def createTextbox(displayText, sceneNum=1, inputBox=False):
     if inputBox:
@@ -109,10 +106,6 @@ def createTextbox(displayText, sceneNum=1, inputBox=False):
         drawRect(154.5, 465.5, 651, 45, (255, 255, 255), 5)
         renderText(displayText, (154.5, 465.5), 25, (0, 0, 0))
 
-def cursorIntersect(rect):
-    for event in pygame.event.get():
-        if event == pygame.MOUSEBUTTONDOWN:
-            return rect.collidepoint(event.pos)
 
 #scenes
 if random.randint(0, 1):
@@ -128,29 +121,29 @@ def scene(num, e_params=0):
         rS(8, (390, 465), 0.3 * e_params + 0.35 * (not  e_params))
 
 running = True
+quitThread = threading.Thread(target=isQuit)
 setBackdrop(scene0_num)
 pygame.display.update()
-waitToPass()
+pygame.time.wait(2000)
 
 scene(1)
-waitToPass()
+pygame.time.wait(2000)
 for i in range(7):
     scene(1)
     createTextbox(d.scene1[i], 1, False)
     pygame.display.update()
-    waitToPass()
+    pygame.time.wait(2000)
 
 playerName = createTextbox(d.scene1[7], 1, True)
 createTextbox(d.scene1[8] + playerName + d.scene1[9], 1, False)
 pygame.display.update()
-waitToPass()
+pygame.time.wait(2000)
 createTextbox(playerName + d.scene1[10], 1, False)
 pygame.display.update()
-waitToPass()
+pygame.time.wait(2000)
 createTextbox(d.scene1[11], 1, False)
 pygame.display.update()
-waitToPass()
+pygame.time.wait(2000)
 createTextbox(d.scene1[12], 1, False)
 pygame.display.update()
-if(waitToPass()):
-    print("bruh")
+
